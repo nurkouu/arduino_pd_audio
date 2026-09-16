@@ -1,9 +1,43 @@
 #include <Arduino.h> 
+#include <Bounce2.h>
+
+Bounce2::Button bouton1; //classe bouton
+Bounce2::Button bouton2; //classe bouton
+
+#define BROCHE_BOUTON1 2 //D2 sur l'arduino
+#define BROCHE_BOUTON2 7 //D2 sur l'arduino
+
+bool etatBtn = LOW;
 
 void setup() {
-  
+  Serial.begin(115200); //Initalize la vitesse de communication 
+  bouton1.attach(BROCHE_BOUTON1, INPUT_PULLUP); //Attache le bouton à la broche
+  bouton2.attach(BROCHE_BOUTON2, INPUT_PULLUP); //Attache le bouton à la broche
+  //pinMode(BROCHE_BOUTON, INPUT_PULLUP);
+  bouton1.setPressedState (LOW);
+  bouton2.setPressedState (LOW);
 }
 
-void loop() {
- 
+void loop() { 
+    
+    bouton1.update(); //Met à jour l'état du bouton
+    bouton2.update(); //Met à jour l'état du bouton
+
+    if (bouton1.pressed()) {
+        Serial.print("bouton1"); // Descripteur
+        Serial.print(" "); // Espace
+        Serial.print(1); // Valeur
+        Serial.println(); // Saut de ligne
+    } 
+    
+    if (bouton2.pressed()) {
+        Serial.print("bouton2"); // Descripteur
+        Serial.print(" "); // Espace
+        Serial.print(2); // Valeur
+        Serial.println(); // Saut de ligne
+    }
+
+    //Serial.print("TEMP ");  // Envoie le descripteur et son espace en un seul bloc
+    //Serial.println(23); // Envoie la valeur et ajoute automatiquement le saut de ligne final
+
 }
